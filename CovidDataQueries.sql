@@ -58,7 +58,12 @@ AND d.date = v.date
 WHERE d.continent IS NOT NULL 
 ORDER BY 2,3
 
-
+SELECT d.location,d.date, MAX(d.total_cases) AS TotalCases, p.population , (CAST(MAX(d.total_cases) AS float)/p.population )*100 AS InfectionPercentage
+FROM app..coviddeaths$ AS d
+JOIN app..WorldPopulation$ AS p
+ON d.location = p.location 
+GROUP BY d.location, p.population,d.date
+ORDER BY 4 DESC
 
 
 
